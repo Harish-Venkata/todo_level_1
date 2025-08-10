@@ -2,15 +2,18 @@ import React, { useCallback, useState } from "react";
 import UserIcon from "../assets/user-icon.png";
 import TitleImg from "../assets/title-placeholder-img.svg";
 import Memo from "../assets/memo.svg";
-import { InputField } from "./ui/inputField";
+import { InputField } from "./ui/InputField";
 // import { Calendar } from "lucide-react";
-import  Calendar  from "../assets/calendar.svg";
+import Calendar from "../assets/calendar.svg";
 import createTaskAPI from "./api/CreateTask";
 import clsx from "clsx";
 
-export const CreateTask = ({fetchAllTasks, showTaskListScreen,showNoTaskScreen,tasks}) => {
-
-
+export const CreateTask = ({
+  fetchAllTasks,
+  showTaskListScreen,
+  showNoTaskScreen,
+  tasks,
+}) => {
   const [taskTitle, setTaskTile] = useState("");
   const [taskDescription, setTaskDescription] = useState("");
   const [taskDueDate, setTaskDueDate] = useState();
@@ -29,16 +32,17 @@ export const CreateTask = ({fetchAllTasks, showTaskListScreen,showNoTaskScreen,t
     setTaskDueDate(date);
   }, []);
 
-
-  const handleCancelButton = useCallback(function(){
-      if(tasks.length){
+  const handleCancelButton = useCallback(
+    function () {
+      if (tasks.length) {
         showTaskListScreen();
-      }
-      else{
+      } else {
         showNoTaskScreen();
       }
-  },[tasks.length])
-  
+    },
+    [tasks.length]
+  );
+
   // Validation
   const validate = useCallback(function (values) {
     const { taskTitle, taskDescription } = values;
@@ -50,20 +54,20 @@ export const CreateTask = ({fetchAllTasks, showTaskListScreen,showNoTaskScreen,t
       return false;
     }
   }, []);
-const handleResponse=useCallback(
-  function(responseData){
-    if(responseData.success){
-      console.log("Handled Successfully");
-      fetchAllTasks();
-    }
-  },[fetchAllTasks]
-)
+  const handleResponse = useCallback(
+    function (responseData) {
+      if (responseData.success) {
+        console.log("Handled Successfully");
+        fetchAllTasks();
+      }
+    },
+    [fetchAllTasks]
+  );
 
-const handleError=useCallback(function(errorMsg){
-  alert(errorMsg);
-  console.log(errorMsg)
-},[]);
-
+  const handleError = useCallback(function (errorMsg) {
+    alert(errorMsg);
+    console.log(errorMsg);
+  }, []);
 
   const createNewTask = useCallback(
     function (values) {
@@ -76,7 +80,7 @@ const handleError=useCallback(function(errorMsg){
     const values = {
       taskTitle,
       taskDescription,
-      taskDueDate
+      taskDueDate,
     };
     const isValid = validate(values);
     if (isValid) createNewTask(values);
@@ -131,7 +135,10 @@ const handleError=useCallback(function(errorMsg){
           >
             {loading ? "Adding Task" : "Add Task"}
           </button>
-          <button className="btn cancel-btn cursor-pointer" onClick={handleCancelButton}>
+          <button
+            className="btn cancel-btn cursor-pointer"
+            onClick={handleCancelButton}
+          >
             Cancel
           </button>
         </div>
