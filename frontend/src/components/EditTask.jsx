@@ -1,15 +1,15 @@
 import React from "react";
 import EditTaskImg from "../assets/edit-task-logo.svg";
-import { InputField } from "./ui/inputField";
+import { InputField } from "./ui/InputField";
 import { useState } from "react";
 import { useCallback } from "react";
 import clsx from "clsx";
-import Memo from "../assets/memo.svg"
-import TitleImg from "../assets/title-placeholder-img.svg"
+import Memo from "../assets/memo.svg";
+import TitleImg from "../assets/title-placeholder-img.svg";
 
-import  Calendar  from "../assets/calendar.svg";
+import Calendar from "../assets/calendar.svg";
 import updateTaskAPI from "./api/updateTask";
-export const EditTask = ({ showTaskListScreen, task ,fetchAllTasks }) => {
+export const EditTask = ({ showTaskListScreen, task, fetchAllTasks }) => {
   const [taskTitle, setTaskTitle] = useState(task.title ?? "");
   const [taskDescription, setTaskDescription] = useState(
     task.description ?? ""
@@ -43,12 +43,15 @@ export const EditTask = ({ showTaskListScreen, task ,fetchAllTasks }) => {
     }
   }, []);
 
-  const handleResponse = useCallback(function (responseData) {
-    if (responseData.success) {
-      console.log("handled successfully");
-      fetchAllTasks();
-    }
-  }, [fetchAllTasks]);
+  const handleResponse = useCallback(
+    function (responseData) {
+      if (responseData.success) {
+        console.log("handled successfully");
+        fetchAllTasks();
+      }
+    },
+    [fetchAllTasks]
+  );
 
   const handleError = useCallback(function (errorMsg) {
     alert(errorMsg);
@@ -122,11 +125,14 @@ export const EditTask = ({ showTaskListScreen, task ,fetchAllTasks }) => {
             disabled={loading}
             onClick={handleEditTask}
           >
-            {loading?"Saving":"Save"}
+            {loading ? "Saving" : "Save"}
           </button>
-          <button className="btn cancel-btn cursor-pointer"
-          onClick={showTaskListScreen}
-          >Cancel</button>
+          <button
+            className="btn cancel-btn cursor-pointer"
+            onClick={showTaskListScreen}
+          >
+            Cancel
+          </button>
         </div>
       </div>
     </div>
